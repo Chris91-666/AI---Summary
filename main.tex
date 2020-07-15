@@ -56,6 +56,11 @@
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \renewcommand{\vec}[1]{\mathbf{#1}}
 
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy} 
+\fancyfoot[CO,CE]{\thepage}
+
 \titlespacing*{\section}{0pt}{5.5ex plus 1ex minus .2ex}{2ex}
 \titlespacing*{\subsection}{0pt}{3ex}{2ex}
 
@@ -1550,6 +1555,190 @@
                     \item Learning a continuous function is called \textbf{regression}
                 \end{itemize}
             \end{itemize}
+    
+        \subsubsection{Boolean Decision Tree when Training}
+            \begin{itemize}
+                \item \textbf{Input}\newline
+                A set $S$ of vectors of input attributes $A_i = \{a_1,...,a_n\}$ and for each vector a single Boolean output value $y$ of the goal predicate
+                \item \textbf{Output}\newline
+                Definition of the goal predicate in the form of a decision tree
+                $$S = \{A_i,y_i\}_{i \in \{1,...,m\}} \mapsto D$$
+                where $D: \{a_j\}_{j \in J} \mapsto \{TRUE,FALSE\}$ and $J \subseteq \{1,...,n\}$.
+            \end{itemize}
+        
+        \subsubsection{Boolean Decision Tree when Predicting}
+            \begin{itemize}
+                \item \textbf{Input}\newline
+                A vector of input attributes $A = \{a_1,...,a_n\}$ and a decision tree $D$
+                \item \textbf{Output}\newline
+                Value of the goal predicate for vector $A$
+            \end{itemize}
+            $\rightarrow$ \textbf{Boolean decision tree $D$ is a Boolean function}
+            $$D: A \mapsto \{TRUE,FALSE\}$$
+        
+        \subsubsection{Properties of (Boolean) Decision Trees}
+            \begin{itemize}
+                \item An internal node of the decision tree represents a test of a property (the value of an attribute)
+                \item Branches are labeled with the possible outcome values of the test
+                \item Each leaf node specifies the Boolean value to be returned if that leaf is reached
+            \end{itemize}
+
+\newpage
+
+        \subsubsection{Inducing Decision Trees from Examples}
+            \begin{itemize}
+                \item \textbf{Naive solution:} we simply construct a tree with one path to a leaf for each example
+                \item In this case, we test all the attributes along the path and attach the classification of the example to the leaf
+                \item Whereas the resulting tree will correctly classify all given examples, it will not say much about other cases
+                \item It just memorizes the observations and does not generalize\newline
+                $\rightarrow$ ''Overfitting''
+            \end{itemize}
+        
+        \subsubsection{Idea of Decision Tree Learning}
+            \begin{itemize}
+                \item \textbf{Divide and Conquer approach:} Choose an (or better: the best) attribute
+                \item Split the training set into subsets each corresponding to a particular value of that attribute
+                \item Now, that we have divided the training set into several smaller training sets, we can recursively apply this process to the smaller training sets
+            \end{itemize}
+        
+        \subsubsection{Choosing an Attribute}
+            \begin{itemize}
+                \item \textbf{Idea:} a good attribute splits the examples into subsets that are (ideally) all positive or all negative
+                \begin{itemize}
+                    \item Patrons?is a better choice than Type?
+                \end{itemize}
+                \item Type? is a poor attribute, since it leaves us with four subsets each of them containing the same number of positive and negative examples -no reduction in problem complexity
+            \end{itemize}
+            \includegraphics[width=1\textwidth]{imgs/ChoosingAnAttribute.png}\newline
+
+\newpage
+
+        \subsubsection{Recursive Learning Process}
+            In each recursive step there are four cases to consider:
+            \begin{enumerate}
+                \item Positive and negative examples\newline
+                $\rightarrow$ choose a new attribute
+                \item Only positive (or only negative) examples\newline
+                $\rightarrow$ done (answer is Yes or No)
+                \item No examples\newline
+                $\rightarrow$ there was no example with the desired property\newline 
+                $\rightarrow$ Answer Yesif the majority of the parent node's examples is positive, otherwise No
+                \item No attributes left, but there are still examples with different classifications\newline
+                $\rightarrow$ there were errors in the data (NOISE) or the attributes do not give sufficient information. Answer \textit{Yes} if the majority of examples is positive, otherwise \textit{No}
+            \end{enumerate}
+        
+        \subsubsection{Properties of the Resulting Tree}
+            \begin{itemize}
+                \item The learned tree is considerably simpler than the one originally given (and from which the training examples were generated)
+                \item The learning algorithm outputs a tree that is consistent with all examples it has seen
+                \item Some tests (Raining, Reservation) are not included since the algorithm can classify the examples without them
+            \end{itemize}
+    
+    
+    \includepdf[pages={29,30},nup=1x2]{ai11_Machine_Learning_Basics.pdf}
+    
+    
+        \subsubsection{The Function IMPORTANCE}
+            \begin{itemize}
+                \item The greedy search used in decision tree learning is designed to approximately minimize the depth of the final tree
+                \item The idea is to pick the attribute that goes as far as possible towards providing an exact classification of the examples
+                \item A perfect attribute divides the examples into sets, each of which are all positive or all negative and thus will be leaves of the tree
+            \end{itemize}
+            $\rightarrow$ Formal measure of ''fairly good'' (e.g. Patrons?) and ''rather useless'' (Type?) to implement the IMPORTANCE function
+        
+        \subsubsection{The Notion of Information Gain}
+            \begin{itemize}
+                \item Information gain is defined in terms of \textbf{entropy}, the fundamental quantity in information theory (Shannon and Weaver, 1949)
+                \item Measure the uncertainty of a random variable
+                \item Acquisition of information corresponds to a reduction in entropy
+            \end{itemize}
+            $\rightarrow$ The less we know about the outcome, the more valuable the prior information
+        
+        \subsubsection{Entropy}
+            \begin{itemize}
+                \item Entropy $H$ of a random variable $V$ with values $v_k$, each with probability $P(v_k)$, is defined as\newline
+                \textbf{Entropy:} 
+                $$H(V) = \sum\limits_{k} P(v_k) log_2 \frac{1}{P(v_k)} = - \sum\limits_{k} P(v_k) log_2 P(v_k)$$
+                \includegraphics[width=1\textwidth]{imgs/Entropy.png}
+                \item Entropy of a fair coin:
+                $$H(Fair) = -(0.5 \cdot log_2 0.5 + 0.5 \cdot log_2 0.5) = 1 bit$$
+                \item Entropy of an unfair (''loaded'') coin that gives 99\% heads:
+                $$H(Loaded) = -(0.99 \cdot log_2 0.99 + 0.01 \cdot log_2 0.01) \approx 0.08 bits$$
+            \end{itemize}
+        
+        \subsubsection{Entropy of a Boolean Variable}
+            \begin{itemize}
+                \item $B(q)$ is the entropy of a Boolean variable that is true with probability $q$
+                $$B(q) = -(q \cdot log_2 q + (1-q) \cdot log_2 (1-q))$$
+                \item E.g.
+                $$H(Loaded) = B(0.99) \approx 0.08$$
+\newpage
+                \item If a training set contains $p$ positive and $n$ negative examples, then the entropy of the goal attribute on the whole set is
+                $$H(Goal) = B \left(\frac{p}{p+n}\right)$$
+            \end{itemize}
+        
+        \subsubsection{Information Provided by an Attribute}
+            \begin{itemize}
+                \item An attribute $A$ with $d$ distinct values divides the training set $E$ into subsets $E_1,...,E_d$
+                \item Each subset $E_k$ has $p_k$ positive and $n_k$ negative examples, so along this branch we need an additional
+                $$B(p_k \slash (p_k + n_k))$$
+                bits of information to answer the question
+                \item A randomly chosen example from the training set has the $k^{th}$ value for the attribute with probability
+                $$(p_k + n_k) \slash (p + n)$$
+            \end{itemize}
+            
+        \subsubsection{Expected Entropy Remaining after Testing Attribute $A$}
+            $$Remainder(A) = \sum\limits_{k=1}^d \frac{p_k + n_k}{p+n} B \left( \frac{p_k}{p_k + n_k} \right)$$
+            \textit{$k=1,...,d$ distinct values of attribute $A$ with number of positive outcomes $p_k$ and number of negative outcomes $n_k$}
+            
+            The \textbf{information gain} from the attribute test on $A$ is the expected reduction in entropy
+            $$Gain(A) = B \left( \frac{p}{p+n} \right) - Remainder(A)$$
+        
+        \subsubsection{IMPORTANCE Function uses Information Gain}
+            IMPORTANCE function computes the information gain and chooses the attribute with the largest value\newline
+            
+            \includegraphics[width=1\textwidth]{imgs/ImportantFunction.png}
+            
+        \subsubsection{Advantages of Decision Trees}
+            \begin{itemize}
+                \item One possibility for representing (Boolean) functions
+                \item Small decision tree can be generated by ranking the attributes based on the information gain
+                \item Are simple to understand and interpret for humans
+                \item Can handle both numeric and categorical data
+                \item Require only little data preparation
+                \item Perform well even on larger datasets
+            \end{itemize}
+        
+        \subsubsection{Disadvantages of Decision Trees}
+            \begin{itemize}
+                \item Often not as accurate as other approaches
+                \begin{itemize}
+                    \item can be exponential in the number of attributes
+                    \item often too difficult to find the minimal decision tree
+                \end{itemize}
+                \item Learners tend to create over-complex trees that do not generalize well (overfitting)
+                \begin{itemize}
+                    \item pruning is very important when training decision trees
+                \end{itemize}
+                \item A small change in the training data can result in a big change in the tree
+                \begin{itemize}
+                    \item tree models are very sensitive to data quality
+                \end{itemize}
+                \item Generalizing decision trees leads us to Random Forests Learning, which addresses these issues
+            \end{itemize}
+        
+        
+    \subsection{Evaluating a Learned Classifier}
+    
+        \subsubsection{Training and Testing}
+            \begin{enumerate}
+                \item 
+            \end{enumerate}
+            
+            
+            
+    
+    
     
     
         

@@ -86,7 +86,7 @@
 % is based.
 
 \ProcessOptions\relax
-\LoadClass[onecolumn,letterpaper]{article}
+\LoadClass[a4]{article}
 
 % required packages.
 
@@ -114,6 +114,7 @@
 
 \DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
 
+\pagestyle{plain}
 
 % in ``review'' mode, the ``\onlineid'' command passes the value given
 % to the paper by the online submission system. This gets printed out 
@@ -196,10 +197,6 @@
     \renewcommand{\@evenhead}{\@oddhead}%
     \renewcommand{\@evenfoot}{\@oddfoot}%
 }
-
-% no page numbers!
-
-\pagestyle{plain}
 
 % if we are in ``review'' mode, turn on line numbers.
 
