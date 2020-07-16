@@ -1622,7 +1622,7 @@
                 $\rightarrow$ done (answer is Yes or No)
                 \item No examples\newline
                 $\rightarrow$ there was no example with the desired property\newline 
-                $\rightarrow$ Answer Yesif the majority of the parent node's examples is positive, otherwise No
+                $\rightarrow$ Answer Yes if the majority of the parent node's examples is positive, otherwise No
                 \item No attributes left, but there are still examples with different classifications\newline
                 $\rightarrow$ there were errors in the data (NOISE) or the attributes do not give sufficient information. Answer \textit{Yes} if the majority of examples is positive, otherwise \textit{No}
             \end{enumerate}
@@ -1732,8 +1732,199 @@
     
         \subsubsection{Training and Testing}
             \begin{enumerate}
-                \item 
+                \item Collect a large number of examples
+                \item Divide it into two \textbf{disjoint} sets: the training set and the test set
+                \item Use the training set to generate $h$
+                \item Measure the percentage of examples of the test set that are correctly classified by $h$
+                \item Repeat the process for randomly-selected training sets of different sizes
             \end{enumerate}
+        
+        \subsubsection{Separation of Training and Test Set}
+            \begin{itemize}
+                \item The training and test sets must be kept separate!
+                \item \textbf{Common error: Retraining an algorithm using examples from the test set and then repeating the tests}
+                \item By doing this, knowledge about the test set gets stored in the algorithm, and the training and test sets are no longer independent
+            \end{itemize}
+
+\newpage
+
+        \subsubsection{$k$-fold Cross-Validation}
+            Basic idea: each example can serve as training data and test data
+            \begin{enumerate}
+                \item Split data into $k$ equal subsets
+                \item Perform $k$ rounds of learning on $k-1$ sets of training data
+                \item Test on remaining $\frac{1}{k}$ of data
+            \end{enumerate}
+            $\rightarrow$ Average test set score of the $k$ rounds should then be a better estimate than a single score\newline
+            $\rightarrow$ Popular values for $k$ are 5 and 10
+        
+        \subsubsection{Evaluating the Quality of Learning Algorithms}
+            4 possible outcomes for each test example
+            \begin{enumerate}
+                \item \textbf{TRUE Positive} (TP)\newline 
+                is an outcome where the model correctly predicts the positive class
+                \item \textbf{TRUE Negative} (TN)\newline 
+                is an outcome where the model correctly predicts the negative class
+                \item \textbf{FALSE Positive} (FP)\newline 
+                is an outcome where the model incorrectly predicts the positive class
+                \item \textbf{FALSE Negative} (FN)\newline 
+                is an outcome where the model incorrectly predicts the negative class
+            \end{enumerate}
+        
+        \subsubsection{Accuracy –Performance of Correct Classifications}
+            \textbf{Accuracy is given by} $$\frac{TP + TN}{Total}$$
+            What is the proportion of correct classifications compared to the total number of tests?
+        
+        \subsubsection{Recall –Performance on YES Instances}
+            \textbf{Recall is given by} $$\frac{TP}{Actual\ Yes} = \frac{TP}{TP + FN}$$
+            \begin{itemize}
+                \item When the true value is YES, how often does the classifier predict YES?
+                \item For example, recall is the estimated probability that a randomly selected relevant document is retrieved in a search
+                \item Recall is also called True-Positive Rate or Sensitivity
+            \end{itemize}
+        
+        \subsubsection{Specificity –Performance on NO Instances}
+            \textbf{Specificity is given by} $$\frac{TN}{Actual\ No} = \frac{TN}{TN + FP}$$
+            \begin{itemize}
+                \item When the true value is NO, how often does the classifier predict NO?
+                \item True negative rate: proportion of actual negatives that the classifier correctly identifies
+            \end{itemize}
+
+\newpage
+        
+        \subsubsection{Precision –Performance when TN cannot be assessed}
+            \textbf{Precision is given by} $$\frac{TP}{Predicted\ Yes} = \frac{TP}{TP + FP}$$
+            \begin{itemize}
+                \item Precision is the estimated probability that a randomly selected retrieved document is relevant
+                \item An issue with accuracy and specificity is that TN cannot always be counted\newline 
+                $\rightarrow$ Example: TN of a Google search query?
+                \item Use precision instead: When the model predicts YES, how often is it correct?
+            \end{itemize}
+        
+        \subsubsection{F1 Score}
+            \begin{itemize}
+                \item We must consider pairs of measures such as recall / specificity or recall / precision for interpreting the performance of a classifier
+                \item The F1 score provides a single measure that summarizes the overall performance
+                $$F_1 = \frac{2}{\frac{1}{recall} + \frac{1}{precision}} = 2 \cdot \frac{precision \cdot recall}{precision + recall}$$
+                \item F1 is the harmonic mean between precision and recall
+                \item Maximum value of F1 is 1 (perfect precision and recall)
+                \item F1 by design does not take TN into account!
+            \end{itemize}
+    
+    \subsection{Neural Networks}
+        \subsubsection{McCulloch-Pitts ''Unit''}
+            \begin{itemize}
+                \item Output is a ''squashed'' linear function of the inputs\newline
+                \includegraphics[width=1\textwidth]{imgs/McCulloch.png}
+                \item An oversimplification of real neurons, but its purpose is to develop an understanding of what networks of simple units can do
+            \end{itemize}
+        
+        \subsubsection{Activation Functions}
+            \includegraphics[width=1\textwidth]{imgs/ActivationFunctions.png}
+            \begin{itemize}
+                \item[a)] is a step function or threshold function
+                \item[b)] is a sigmoid function $\frac{1}{1 + \exp^{-x}}$
+                \item[c)] is a ReLu function $max(0,x)$
+            \end{itemize}
+        
+        \subsubsection{Network Structures}
+            \begin{itemize}
+                \item \textbf{Feed-forward networks:}
+                \begin{itemize}
+                    \item Single-layer perceptron
+                    \item Multi-layer perceptron
+                \end{itemize}
+                \item \textbf{Feed-forward networks are directed acyclic graphs}
+                \begin{itemize}
+                    \item they have no internal state other than the weights
+                \end{itemize}
+                \item \textbf{Recurrent networks:}
+                \begin{itemize}
+                    \item activation is fed back to causing units (cyclic graphs)
+                    \item have internal state (short term memory)
+                    \item e.g. Hopfield nets use bidirectional connections with symmetric weights ($w_{i,j} = w_{j,i}$)
+                \end{itemize}
+            \end{itemize}
+        
+        \subsubsection{Single-Layer Perceptron}
+            \begin{itemize}
+                \item Output units all operate separately -no shared weights
+                \item Adjusting weights moves the location, orientation, and steepness of cliff\newline
+                \includegraphics[width=0.8\textwidth]{imgs/SingleLayerPerceptron.png}
+            \end{itemize}
+        
+        \subsubsection{Expressiveness of Perceptrons}
+            Consider a perceptron with the step function $g$ (Rosenblatt 1957/60)
+            \begin{itemize}
+                \item which can represent AND, OR, NOT, majority, etc., but not XOR
+                \item which represents a linear separator in input space
+                $$\sum\limits_{j} w_j x_j > 0 \ or\ W \cdot x > 0$$
+                \includegraphics[width=1\textwidth]{imgs/ExpressivenessofPerceptrons.png}
+            \end{itemize}
+            
+        \subsubsection{Multi-Layer Perceptron / Feed-forward Network}
+            \begin{itemize}
+                \item Layers are usually fully connected
+                \item Numbers of hidden units typically chosen by hand\newline
+                \includegraphics[width=1\textwidth]{imgs/MultiLayerPerceptron.png}
+            \end{itemize}
+
+\newpage
+
+        \subsubsection{Learning in Feed-forward Network}
+            \begin{itemize}
+                \item Feed-forward network is a parameterized family of nonlinear functions
+                \item Adjusting weights changes the function: do learning this way!\newline
+                \includegraphics[width=0.8\textwidth]{imgs/MultiLayerPerceptron.png}
+                $$a_5 = g(w_{3,5} \cdot a_3 + w_{4,5} \cdot a_4) = g(w_{3,5} \cdot g(w_{1,3} \cdot a_1 + w_{2,3} \cdot a_2) + w_{4,5} \cdot g(w_{1,4} \cdot a_1 + w_{2,4} \cdot a_2))$$
+            \end{itemize}
+        
+        \subsubsection{Derivation of the Error and the ''Delta''}
+            The squared error on a single example with expected output $y_k$ and current output $a_k$ is defined as
+            $$E = \frac{1}{2} \sum\limits_{k} (y_k -a_k)^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ a_k = g(in_k) = g \left( \sum\limits_{j} w_{j,k} s_j \right)$$
+            where the sum is over the $k$ nodes in the output layer. Then, it yields\newline
+            \includegraphics[width=0.8\textwidth]{imgs/DerivationOfTheErrorAndTheDelta.png}
+        
+        \subsubsection{Backpropagation Learning}
+            \begin{itemize}
+                \item Adjust weights leading to output layer:
+                $$w_{j,k} \leftarrow w_{j,k} + \alpha \times a_j \times \Delta_k\ \ \ \ \ \ \ \ \ \ where\ \ \ \ \ \ \ \ \ \ \Delta_k = g'(in_k)(y_k - a_k)$$
+                ($\alpha$ - learning rate, a small constant e.g. 0.02; $g'$ - derivative of activation function $g$)
+                \item Adjust weights for each node $j$ in hidden layer:
+                $$w_{i,j} \leftarrow w_{i,j} + \alpha \times a_i \times \Delta_j\ \ \ \ \ \ \ \ \ \ where\ \ \ \ \ \ \ \ \ \ \Delta_j = g'(in_j) \sum\limits_{k} w_{j,k} \Delta_k$$
+            \end{itemize}
+        
+        
+    \includepdf[pages={73,74},nup=1x2]{ai11_Machine_Learning_Basics.pdf}
+    
+    
+        \subsubsection{ComparisonMulti-Layer Network -DecisionTree}
+            \begin{itemize}
+                \item Comparative learning curves showing that decision-tree learning does slightly better on the restaurant problem than back-propagation in a multi-layer network
+                \item Decision trees work well for small data sets, but do not scale well for multi-dimensional data\newline
+                \includegraphics[width=0.8\textwidth]{imgs/ComparisonMultiLayerNetwork.png}
+            \end{itemize}
+        
+    \subsection{Summary}
+        \begin{itemize}
+            \item Machine learning is a very important and huge research area in artificial intelligence
+            \item Supervised learning takes a set of annoted training data (input-output pairs) as input and generates a generalized function to correctly predict the output for a given input
+            \item Decision tree learning is an effective method for smaller data sets
+            \item Neural networks are layered graphs of processing units and trained by backpropagation
+            \item Neural networks have shown impressive performance and are widely used for image and speech recognition tasks or automatic translation today - despite inherent limitations
+            \item Information theory provides an important basis for learning and the evaluation of learning algorithms
+            \item Measures such as precision, recall, accuracy, specifity, F1 are used to compare the performance of learning algorithms on specific tasks
+        \end{itemize}
+
+\newpage
+
+
+\section{Planning, Part I: Framework}
+    
+    
+        
+        
+            
             
             
             
