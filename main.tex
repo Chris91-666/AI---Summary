@@ -1,4 +1,4 @@
-\documentclass[conference]{styles/acmsiggraph}
+\documentclass[conference, a4paper]{styles/acmsiggraph}
 
 \usepackage{comment} % enables the use of multi-line comments (\ifx \fi)
 \usepackage{lipsum} %This package just generates Lorem Ipsum filler text.
@@ -25,7 +25,7 @@
 \newtheorem{definition}{Definition}
 
 \title{\huge Artificial Intelligence \\ \LARGE {Summary}}
-\author{\Large Christian Schmidt \\ \Large Guido Battiston}
+\author{\Large Christian Schmidt \\ \Small Guido Battiston}
 \pdfauthor{Christian Schmidt}
 
 \hypersetup{
@@ -1921,33 +1921,138 @@
 
 \section{Planning, Part I: Framework}
     
+    \subsection{''STRIPS'' Planning}
+        \begin{itemize}
+            \item \textbf{STRIPS} = Stanford Research Institute Problem Solver.\newline 
+            \textit{STRIPS is the simplest possible (reasonably expressive) logics-based planning language.}
+            \item STRIPS has only \textbf{Boolean variables}: propositional logic atoms.
+            \item Its preconditions/effects/goals are as canonical as imaginable:
+            \begin{itemize}
+                \item Preconditions, goals: \textbf{conjunctions} of \textbf{positive atoms}.
+                \item Effects: \textbf{conjunctions} of \textbf{literals} (positive or negated atoms).
+            \end{itemize}
+            \item We use the common set-based notation for this simple formalism.
+            \item I'll outline some extensions beyond STRIPS later on, when we discuss PDDL.
+        \end{itemize}
     
+    \subsection{STRIPS Planning: Syntax}
+        \subsubsection{Definition (STRIPS Planning Task)}
+            A \textbf{STRIPS planning task}, short \textbf{planning task}, is a 4-tuple $\Pi = (P,A,I,G)$ where:
+            \begin{itemize}
+                \item $P$ is a finite set of \textbf{facts} (aka \textbf{propositions}).
+                \item $A$ is a finite set of \textbf{actions}; each $a \in A$ is a triple $a = (pre_a,add_a,del_a)$ of subsets of $P$ referred to as the action's \textbf{precondition}, \textbf{add list}, and \textbf{delete list} respectively; we require that $add_a \cap del_a = \emptyset$.
+                \item $I \subseteq P$ is the \textbf{initial state}.
+                \item $G \subseteq P$ is the \textbf{goal}.
+            \end{itemize}
+            We will often give each action $a \in A$ a \textbf{name} (a string), and identify $a$ with that name.\newline
         
+        \textbf{Note:} We assume \textbf{unit costs} for simplicity: every action has cost 1.
+    
+    \subsection{STRIPS Planning: Semantics}
+    
+    
+    \includepdf[pages={33,34},nup=1x2]{ai12_POST-HANDOUT_Planning_Part_I.pdf}
+    \includepdf[pages={35,36},nup=1x2]{ai12_POST-HANDOUT_Planning_Part_I.pdf}
+    
+    
+    \subsection{PDDL Quick Facts}
+        \begin{itemize}
+            \item \textbf{PDDL is not a propositional language:}
+            \begin{itemize}
+                \item Representation is ''lifted'', using \textbf{variables} ranging over a universe of \textbf{objects} like in predicate logic. The universe is \textbf{finite} however.
+                \item \textbf{Predicates} as in predicate logic.
+                \item \textbf{Action schemas} parameterized by objects.
+            \end{itemize}
+            \item \textbf{A PDDL planning task comes in two pieces:}
+            \begin{itemize}
+                \item The \textbf{domain file} and the \textbf{problem file}.
+                \item The problem file gives the objects, the initial state, and the goal state.
+                \item The domain file gives the predicates and the operators; each benchmark domain has one domain file.
+            \end{itemize}
+        \end{itemize}
+    
+    \subsection{NP and PSPACE}
+        \begin{itemize}
+            \item \textbf{Def Turing machine:}\newline 
+            Works on a \textbf{tape} consisting of \textbf{tape cells}, across which its \textbf{R/W head} moves. 
+            The machine has \textbf{internal states}. 
+            There are \textbf{transition rules} specifying, given the current cell content and internal state, what the subsequent internal state will be, how what the R/W head does (write a symbol and/or move). 
+            Some internal states are \textbf{accepting}.
+            \item \textbf{Def NP:}\newline 
+            Decision problems for which there exists a non-deterministic Turing machine that runs in time polynomial in the size of its input. 
+            Accepts if at least one of the possible runs accepts.
+            \item \textbf{Def PSPACE:}\newline 
+            Decision problems for which there exists a deterministic Turing machine that runs in space polynomial in the size of its input.
+            \item \textbf{Relation:}\newline 
+            Non-deterministic polynomial space can be simulated in deterministic polynomial space.\newline
+            Thus $PSPACE = NPSPACE$, and hence (trivially) $NP \subseteq PSPACE$. 
+            It is commonly believed that $NP \nsubseteq PSPACE$ (similar to $P \subseteq NP$).
+        \end{itemize}
+    
+    \subsection{Decision Problems in (STRIPS) Planning}
+        \subsubsection{Definition (PlanEx)}
+            By \textbf{PlanEx}, we denote the problem of deciding, given a STRIPS planning task $\Pi$, whether or not there exists a plan for $\Pi$.\newline 
+            $\rightarrow$ Corresponds to satisficing planning.
         
-            
-            
-            
-            
-    
-    
-    
-    
+        \subsubsection{Definition (PlanLen)}
+            By \textbf{PlanLen}, we denote the problem of deciding, given a STRIPS planning task $\Pi$ and an integer $K$, whether or not there exists a plan for $\Pi$ of length at most $K$.\newline
+            $\rightarrow$ Corresponds to optimal planning.
+
+\newpage
+
+        \subsubsection{Definition (PolyPlanLen)}
+            By \textbf{PolyPlanLen}, we denote the problem of deciding, given a STRIPS planning task $\Pi$ and an integer $K$ \textbf{bounded by a polynomial in the size of $\Pi$}, whether or not there exists a plan for $\Pi$ of length at most $K$.\newline
+            $\rightarrow$ Corresponds to optimal planning with ''small'' plans.\newline
+            Example of a planning domain with exponentially long plans? Towers of Hanoi.
         
-    
-                
-                
-    
-    
-        
-            
-            
-    
+    \subsection{Summary}
+        \begin{itemize}
+            \item General problem solving attempts to develop solvers that perform well across a large class of problems.
+            \item Planning, as considered here, is a form of general problem solving dedicated to the class of classical search problems. 
+            (Actually, we also address inaccessible, stochastic, dynamic, continuous, and multi-agent settings.)
+            \item Heuristic search planning has dominated the International Planning Competition (IPC). 
+            We focus on it here.
+            \item STRIPS is the simplest possible, while reasonably expressive, language for our purposes. 
+            It uses Boolean variables (facts), and denes actions in terms of precondition, add list, and delete list.
+            PDDL is the de-facto standard language for describing planning problems.
+            \item Plan existence (bounded or not) is \textbf{PSPACE}-complete to decide for STRIPS. 
+            If we bound plans polynomially, we get down to \textbf{NP}-completeness.
+        \end{itemize}
 
+
+\section{Planning, Part II: Algorithms}
+    \subsection{Summary}
+        \begin{itemize}
+            \item Heuristic search on classical search problems relies on a function $h$ mapping states $s$ to an estimate $h(s)$ of their goal distance. 
+            Such functions $h$ are derived by solving \textbf{relaxed problems}.
+            \item In planning, the relaxed problems are generated and solved automatically.
+            There are four known families of suitable relaxation methods: 
+            \textbf{abstractions}, \textbf{landmarks}, \textbf{critical paths}, and \textbf{ignoring deletes} (aka \textbf{delete relaxation}).
+            \item The delete relaxation consists in dropping the deletes from STRIPS planning tasks. 
+            A \textbf{relaxed plan} is a plan for such a relaxed task. 
+            $h^+(s)$ is the length of an optimal relaxed plan for state $s$. 
+            $h^+$ is \textbf{NP}-hard to compute.
+            \item $h^{FF}$ approximates $h^+$ by computing some, not necessarily optimal, relaxed plan. 
+            That is done by a forward pass (building a \textbf{relaxed planning graph}), followed by a backward pass (\textbf{extracting a relaxed plan}).
+        \end{itemize}
     
-
     
-
-
-
+    \includepdf[pages={13,14},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    \includepdf[pages={15,16},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    \includepdf[pages={29,30},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    
+    \includepdf[pages={34,36},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    
+    \includepdf[pages={38,39},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    \includepdf[pages={40,41},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    
+    \includepdf[pages={44,45},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    \includepdf[pages={46,60},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    
+    \includepdf[pages={66,68},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    \includepdf[pages={69,70},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    
+    \includepdf[pages={75,76},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
+    
 
 \end{document}

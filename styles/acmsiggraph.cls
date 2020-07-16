@@ -55,7 +55,6 @@
 % lots of options aren't allowed.
 
 \DeclareOption{onecolumn}{\OptionNotUsed}
-\DeclareOption{a4paper}{\OptionNotUsed}
 \DeclareOption{12pt}{\OptionNotUsed}
 \DeclareOption{14pt}{\OptionNotUsed}
 
@@ -86,7 +85,7 @@
 % is based.
 
 \ProcessOptions\relax
-\LoadClass[a4]{article}
+\LoadClass[a4paper]{article}
 
 % required packages.
 
