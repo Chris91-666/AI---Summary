@@ -121,6 +121,15 @@
             \item The agent is rational if it always chooses optimal actions
         \end{itemize}
         
+    \subsection{Reflex Agent}
+        \subsubsection{Simple Reflex Agent}
+        \subsubsection{Function of the Reflex Agent}
+        \subsubsection{Model-based Reflex Agent}
+        \subsubsection{Function of the Model-based Agent}
+    \subsection{Utility-based Agent}
+    \subsection{Learning Agent}
+    \subsection{Goal-based Agent}
+        
         \includepdf[pages={30,31},nup=1x2]{ai0B_Intelligent_Agents.pdf}
         \includepdf[pages={35,36},nup=1x2]{ai0B_Intelligent_Agents.pdf}
         \includepdf[pages={39,41},nup=1x2]{ai0B_Intelligent_Agents.pdf}
@@ -188,6 +197,13 @@
             \item The \textbf{set of all solutions} for $\Theta$ is denoted by $\mathbb{S}^{\Theta}$.
             \item If a solution exists, then $\Theta$ is \textbf{solvable}, otherwise \textbf{unsolvable}.
         \end{itemize}
+    
+    \subsection{Formulating Search Problems}
+        \subsubsection{Blackbox Description}
+            \subsubsubsection{Implementation – What is a Search Node?}
+            \subsubsubsection{Implementation – Operations on Search Nodes}
+            \subsubsubsection{Implementation – Operations on the Open List}
+        \subsubsection{Whitebox Description: Romania Travel Example}
         
         
         \includepdf[pages={12,13},nup=1x2]{ai01_Search_Systematic_Search.pdf}
@@ -232,6 +248,18 @@
                     \item Use duplicate elimination: If a generated state is in the closed list, skip it, otherwise explore it
                 \end{itemize}
         \end{itemize}
+    
+    \subsection{Comparing Tree Search with Graph Search}
+        \subsubsection{Criteria for Evaluating Search Strategies}
+    \subsection{BFS Algorithm (Breadth-First Search)}
+    \subsection{DFS Algorithm (Depth-First Search)}
+    \subsection{Depth-Limited Search Algorithm}
+    \subsection{Iterative Deepening Search (IDS) Algorithm}
+            \subsubsection{Illustration of IDS}
+            \subsubsection{Properties of IDS}
+    \subsection{UCS Algorithm (Uniform-Cost Search)}
+    \subsection{UCS and Dijkstra's Algorithm}
+    \subsection{Overview on Algorithm Properties}
         
         
         \includepdf[pages={25,26},nup=1x2]{ai01_Search_Systematic_Search.pdf}
@@ -281,6 +309,18 @@
         
         The function $h$ is an optimistic estimation of the costs that actually occur.
         It underestimates the real costs and provides the search algorithm with a lower bound on the goal distance.
+    
+    \subsection{Consistency (Monotonicity) of $h(s)$}
+        \subsubsection{Consistency $\Rightarrow$ Admissibility}
+    \subsection{GBFS Algorithm (Greedy Best-First-Search)}
+    \subsection{$A^*$ Algorithm}
+    \subsection{Bidirectional Search (Concept of Searching)}
+        \subsubsection{Measuring Heuristic Distances in Bidirectional Search}
+    \subsection{Overview on Properties of Heuristic Algorithms}
+        \subsubsection{Designing Heuristic Functions}
+        \subsubsection{Heuristic Functions Example}
+    \subsection{Misplaced Tiles vs. Manhattan Distance}
+    
         
         \includepdf[pages={9,10},nup=1x2]{ai02_Search_Heuristic_Search.pdf}
         \includepdf[pages={13,18},nup=1x2]{ai02_Search_Heuristic_Search.pdf}
@@ -337,6 +377,11 @@
                 \end{itemize}
         \end{itemize}
     
+    \subsection{Hillclimbing Algorithm (Steepest Ascent Search, Greedy Local Search)}
+        \subsubsection{State-Space Landscape}
+    \subsection{Simulated Annealing Algorithm}
+    \subsection{UCT: A Stochastic Search Algorithm}
+    
     
     \includepdf[pages={6,7},nup=1x2]{ai03_Search_Local_and_Stochastic_Search.pdf}
     \includepdf[pages={18,20},nup=1x2]{ai03_Search_Local_and_Stochastic_Search.pdf}
@@ -374,6 +419,15 @@
                     \item still very popular in practice they are good for finding a variety of well fitting solutions
                 \end{itemize}
         \end{itemize}
+    
+    \subsection{The Basis MCTS Process}
+        \subsubsection{Which Node to Select? -> Bandit Problems}
+    \subsection{Overview of Phases in MCTS-based Algorithms}
+    \subsection{UCT Algorithm: Overview}
+    \subsection{Using UCB1 as Tree Policy}
+        \subsubsection{Selection + Expansion: The Tree Policy}
+    \subsection{Simulation: The Default Policy}
+    \subsection{Backpropagation}
     
     
     \includepdf[pages={24,25},nup=1x2]{ai03_Search_Local_and_Stochastic_Search.pdf}
@@ -515,6 +569,13 @@
         If $\mathcal{R}$ is \textbf{sound} and \textbf{complete}:
             $$KB \vDash \varphi \Leftrightarrow KB \vdash_{\mathcal{R}} \varphi.$$
     
+    \subsection{BNF Grammar for Propositional Logic}
+    \subsection{Definition of $I$}
+    \subsection{Alternative Representation: Truth Table for Basic Connectives}
+    \subsection{Entailment}
+    \subsection{The Resolution Calculus}
+    \subsection{Generalized Resolution Rule}
+    \subsection{Clause Notation for CNF}
 
 
     \includepdf[pages={16,19},nup=1x2]{ai04_Propositional_Logic.pdf}
@@ -549,6 +610,16 @@
                 \end{itemize}
             \item \textbf{Unresolved} if it is neither unsatisfied, nor satisfied, nor unit
         \end{itemize}
+    
+    \subsection{Key Observations About Clauses}
+        \subsubsection{Early Termination}
+        \subsubsection{Pure Symbol Heuristic}
+        \subsubsection{Unit Clause Heuristic}
+    \subsection{Davis-Putnam Logemann-Loveland (DPLL) Algorithm}
+    \subsection{Implication Graph}
+        \subsubsection{Implication Graph with Conflict}
+    \subsection{Conflict-Driven Clause Learning}
+        \subsubsection{Learning the Cause of the Conflict}
     
     
     \includepdf[pages={46,47},nup=1x2]{ai04_Propositional_Logic.pdf}
@@ -753,6 +824,12 @@
             \item Any PL1 formula can eficiently be brought into a satisfiability-equivalent clausal normal form.
         \end{itemize}
     
+    \subsection{Prenex Normal Form: Steps}
+    \subsection{Prenex Normal Form: Variable Renaming}
+    \subsection{Skolem Normal Form}
+    \subsection{Clausal Normal Form}
+    \subsection{Transformations: Prenex <-> Skolem <-> Clausal}
+    
     
     \includepdf[pages={29,30},nup=1x2]{ai05_POST-HANDOUT_Predicate_Logic_I.pdf}
     \includepdf[pages={31,32},nup=1x2]{ai05_POST-HANDOUT_Predicate_Logic_I.pdf}
@@ -795,6 +872,13 @@
         
         $\rightarrow$ If a PL1 formula is unsatisfiable, then we can confirm this. 
             Otherwise, we might end up in an infinite loop.
+    
+    \subsection{Herbrand Universe (Slides)}
+    \subsection{Herbrand Expansion}
+    \subsection{Towards PL1 Resolution}
+    \subsection{Substitutions}
+        \subsubsection{Composing Substitutions}
+        \subsubsection{Properties of Substitutions}
     
     
     \includepdf[pages={7,8},nup=1x2]{ai06_POST-HANDOUT_Predicate_Logic_I_I.pdf}
@@ -847,6 +931,18 @@
             \item The set of satisfiable PL1 formulas is not recursively enumerable. 
                 Thus, neither the reduction to propositional logic, nor PL1 resolution, guarantee to terminate in finite time.
         \end{itemize}
+    
+    \subsection{Unification Algorithm}
+        \subsubsection{Unification Algorithm EXAMPLE}
+    \subsection{PL1 Resolution}
+        \subsubsection{Setup}
+        \subsubsection{Binary PL1 Resolution}
+        \subsubsection{Why Do We Need To Standardize Variables Apart?}
+        \subsubsection{Binary PL1 Resolution: Examples}
+        \subsubsection{Where Binary PL1 Resolution Fails}
+        \subsubsection{Solution 1: Full PL1 Resolution}
+        \subsubsection{Solution 2:  Binary PL1 Resolution + Factoring}
+        \subsubsection{What About Completeness?  The Lifting Lemma}
 
         
     \includepdf[pages={23,24},nup=1x2]{ai06_POST-HANDOUT_Predicate_Logic_I_I.pdf}
@@ -894,7 +990,8 @@
                 \item action = \textbf{move}
             \end{itemize}
             (A round of the game - one move Max, one move Min - is often referred to as a ''move'', and individual actions as ''half-moves''. We do NOT do that here.)
-        
+
+\newpage
     
     \subsection{Why Games are Hard to Solve}
         \subsubsection{Definition (Policy)}
@@ -930,7 +1027,9 @@
                 \end{itemize}
             \item Selecting a move for Max at the root: Choose one move that leads to a successor node with maximal utility.
         \end{enumerate}
-    
+
+\newpage
+
     \subsection{Minimax, Pro and Contra}
         \begin{itemize}
             \item \textbf{Pro:}
@@ -949,6 +1048,11 @@
                     \item \textit{Alpha-beta} pruning reduces search yet preserves optimality.
                 \end{itemize}
         \end{itemize}
+    
+    \subsection{Minimax (Slides)}
+    \subsection{Alpha Pruning (Slides)}
+    \subsection{Alpha-Beta Pruning (Slides)}
+    \subsection{Alpha-Beta Search (Slides)}
     
     
     \includepdf[pages={18,19},nup=1x2]{ai07_POST-HANDOUT_Adversarial_Search.pdf}
@@ -1083,6 +1187,12 @@
                 \item $C,D$ for complex concept descriptions
                 \item $r,s$ for role names
             \end{itemize}
+    
+    \subsection{$\mathcal{ALC}$ Examples}
+    \subsection{Semantics of $\mathcal{ALC}$}
+    \subsection{A Description Logic System}
+    \subsection{TBox/ABox Example}
+    
         
         
     \includepdf[pages={29,31},nup=1x2]{ai08_Knowledge_Representation.pdf}
@@ -1158,6 +1268,11 @@
                 \item \textbf{Instance retrieval}\newline
                     Retrieve all objects for a given concept description
             \end{itemize}
+    
+    \subsection{Concept Definitions in an Acyclic Tbox and GCI}
+    \subsection{Formalization of Reasoning Services}
+    \subsection{Formalization of Assertional Reasoning}
+    \subsection{Realization}
         
     
     \includepdf[pages={32,36},nup=1x2]{ai08_Knowledge_Representation.pdf}
@@ -1188,6 +1303,15 @@
     
     
     \subsection{Web Ontologies and the W3C OWL Standard}
+    
+        \subsubsection{Semantic Web Architecture}
+        \subsubsection{The OWL Family}
+        \subsubsection{OWL DL}
+        \subsubsection{Reasoning in OWL-DL:}
+            \subsubsubsection{Class-Class Relationships}
+            \subsubsubsection{Class-Instance Memberships}
+        \subsubsection{Subsumption as Essential Class-Class Relationship}
+        \subsubsection{Computing Subsumption By Structural Comparison}
     
     
     \includepdf[pages={60,61},nup=1x2]{ai08_Knowledge_Representation.pdf}
@@ -1235,7 +1359,7 @@
                     \item A set of \textbf{variables}, each associated with its \textbf{domain}.
                     \item A set of constraints over these variables.
                 \end{itemize}
-            \item \textbf{Find:} An \textbf{assignment} of variables to values (from the respective domains), so that every constraint is satisfied.
+            \item \textbf{Find:} An \textbf{assignment} of variables to values (from respective domains), so that every constraint is satisfied.
         \end{itemize}
     
     
@@ -1275,6 +1399,9 @@
                     \item $C_{uv}$ is identified by its set $\{u,v\}$ of variables; the order we choose for the relation is arbitrary.
                 \end{itemize}
     
+            \subsubsubsection{Example: Coloring Australia}
+            \subsubsubsection{CONSTRAINT NETWORKS: VARIANTS}
+    
     
     \includepdf[pages={15,16},nup=1x2]{ai09_POST-HANDOUT_CSP_I.pdf}
     \includepdf[pages={17,18},nup=1x2]{ai09_POST-HANDOUT_CSP_I.pdf}
@@ -1312,6 +1439,14 @@
             \item \textbf{Variable orderings} in backtracking can dramatically reduce the size of the search tree. 
             \textbf{Value orderings} have this potential (only) in solvable sub-trees.
         \end{itemize}
+    
+    \subsection{Solutions}
+        \subsubsection{Definition (Solution)}
+        \subsubsection{Example ''Coloring Australia''}
+    \subsection{Consistency vs. Extensibility}
+    \subsection{Naive Backtracking (Algorithm)}
+        \subsubsection{Example ''Coloring Australia''}
+    \subsection{Variable- and Value Ordering}
     
     
     \includepdf[pages={22,24},nup=1x2]{ai09_POST-HANDOUT_CSP_I.pdf}
@@ -1361,6 +1496,12 @@
             $\rightarrow$ $a$ cannot be extended to a solution (neither in $\gamma$ nor in $\gamma'$ because they're equivalent).
             $a$ is consistent with $\gamma$, but not with $\gamma'$.
     
+    \subsection{Illustration: Inference}
+    \subsection{Backtracking With Inference}
+    \subsection{Forward Checking}
+        \subsubsection{Forward Checking (Algorithm)}
+        \subsubsection{When Forward Checking is Not Good Enough}
+    
     
     \includepdf[pages={4,15},nup=1x2]{ai10_POST-HANDOUT_CSP_II.pdf}
     
@@ -1393,6 +1534,10 @@
                 (when $v$ was assigned the value $d'$), and $(d,d') \notin C_{uv}$.
                 Clearly, enforcing arc consistency of $u$ relative to $v$ removes $d$ from $D_u$ as well.
             \end{itemize}
+    
+        \subsubsection{Enforcing Arc Consistency forOnePair of Variables}
+        \subsubsection{AC-1}
+        \subsubsection{AC-3}
     
     
     \includepdf[pages={25,26},nup=1x2]{ai10_POST-HANDOUT_CSP_II.pdf}
@@ -1438,6 +1583,11 @@
             \item A \textbf{cutset} is a subset of variables removing which renders the constraint graph acyclic.
             \textbf{Cutset decomposition} backtracks only on such a cuset, and solves a sub-problem with acyclic constraint graph at each search leaf.
         \end{itemize}
+    
+    \subsection{Acyclic Constraint Graphs}
+        \subsubsection{Algorithm}
+        \subsubsection{''Almost'' Acyclic Constraint Graphs}
+    \subsection{''Decomposition'' 3.0:  Cutset Conditioning}
         
     
     \includepdf[pages={41,50},nup=1x2]{ai10_POST-HANDOUT_CSP_II.pdf}
@@ -1633,6 +1783,8 @@
                 \item The learning algorithm outputs a tree that is consistent with all examples it has seen
                 \item Some tests (Raining, Reservation) are not included since the algorithm can classify the examples without them
             \end{itemize}
+        
+        \subsection{The Decision-Tree-Learning Algorithm}
     
     
     \includepdf[pages={29,30},nup=1x2]{ai11_Machine_Learning_Basics.pdf}
@@ -1893,6 +2045,9 @@
                 \item Adjust weights for each node $j$ in hidden layer:
                 $$w_{i,j} \leftarrow w_{i,j} + \alpha \times a_i \times \Delta_j\ \ \ \ \ \ \ \ \ \ where\ \ \ \ \ \ \ \ \ \ \Delta_j = g'(in_j) \sum\limits_{k} w_{j,k} \Delta_k$$
             \end{itemize}
+            
+            \subsubsubsection{Back-Prop-Learning Algorithm}
+        \subsection{Example Neural Network Learning}
         
         
     \includepdf[pages={73,74},nup=1x2]{ai11_Machine_Learning_Basics.pdf}
@@ -2035,6 +2190,38 @@
             \item $h^{FF}$ approximates $h^+$ by computing some, not necessarily optimal, relaxed plan. 
             That is done by a forward pass (building a \textbf{relaxed planning graph}), followed by a backward pass (\textbf{extracting a relaxed plan}).
         \end{itemize}
+    
+    \subsection{How to Relax}
+        \subsubsection{Relaxation in Route-Finding}
+        \subsubsection{How to Relax in Planning? (Example ''Logistics'')}
+    \subsection{How to Relax During Search:}
+        \subsubsection{Overview}
+        \subsubsection{Only-Adds}
+    \subsection{Only-Adds is a ''Native'' Relaxation}
+    \subsection{The Delete Relaxation}
+        \subsubsection{Definition (Delete Relaxation)}
+        \subsubsection{Definition (Relaxed Plan)}
+            \subsubsubsection{A Relaxed Plan for ''Logistics''}
+    \subsection{$PlanEX^+$}
+        \subsubsection{Definition (Relaxed Plan Existence Problem)}
+        \subsubsection{$PlanEx^+$ is Easy}
+        \subsubsection{Deciding $PlanEx^+$}
+            \subsubsubsection{in ''TSP'' in Australia}
+            \subsubsubsection{in ''Logistics''}
+            \subsubsubsection{in Unsolvable ''Logistics''}
+    \subsection{$h^+$: The Ideal Delete Relaxation Heuristic}
+        \subsubsection{Definition (Optimal Relaxed Plan)}
+        \subsubsection{Definition ($h^+$)}
+        \subsubsection{$h^+$ is Admissible}
+        \subsubsection{$h^+$ in ''TSP'' in Australia}
+        \subsubsection{On the ''Accuracy'' of $h^+$}
+        \subsubsection{How to Compute $h^+$?}
+            \subsubsubsection{Definition ($PlanLen^+$)}
+    \subsection{Approximating $h^+$: $h^{FF}$}
+        \subsubsection{Definition ($h^{FF}$)}
+        \subsubsection{Computing $h^{FF}$:}
+            \subsubsubsection{Relaxed Planning Graphs (RPG)}
+            \subsubsubsection{Extracting a Relaxed Plan}
     
     
     \includepdf[pages={13,14},nup=1x2]{ai13_POST-HANDOUT_Planning_Part_II.pdf}
